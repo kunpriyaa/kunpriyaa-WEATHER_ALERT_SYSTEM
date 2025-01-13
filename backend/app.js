@@ -1,18 +1,20 @@
 require('dotenv').config();
 const express = require('express');
-const path = require('path'); 
-const db = require('./models/index');
-const authRoutes = require('./routes/authRoutes');
+const path = require('path');
+const db = require('./models/index'); 
+const authRoutes = require('./routes/authRoutes'); 
+const userSettingRoutes = require('./routes/userSettingRoutes'); 
 const weatherRoutes = require('./routes/weatherRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.use(express.json());
+
 app.use('/api/auth', authRoutes);
-app.use('/api/weather', weatherRoutes);
+app.use('/api/user-settings', userSettingRoutes);
+app.use('/api/weather', weatherRoutes); 
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend', 'index.html'));

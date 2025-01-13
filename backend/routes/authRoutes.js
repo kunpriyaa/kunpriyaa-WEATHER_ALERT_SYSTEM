@@ -1,49 +1,44 @@
 const express = require('express');
+const router = express.Router();
+const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const pool = require('../models/index');
-const router = express.Router();
 
-// Sign Up route
 router.post('/signup', async (req, res) => {
-    const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const { email, password } = req.body;
 
     try {
-        const result = await pool.query(
-            'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *',
-            [username, hashedPassword]
-        );
-        res.status(201).json({ message: 'User created successfully', user: result.rows[0] });
-    } catch (err) {
-        res.status(500).json({ message: 'Error creating user', error: err.message });
-    }
-});
-
-// Login route
-router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-
-    try {
-        const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
-
-        if (result.rows.length === 0) {
-            return res.status(400).json({ message: 'User not found' });
+        const existingUser = await User.findOne({ where: { email } });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
         }
 
-        const user = result.rows[0];
+        const newUser = await User.create({ email, password });
+        res.status(201).json(newUser);
+    } catch (error) {
+        console.error('Error during signup', error);
+        res.status(500).json({ message: 'Error during signup' });
+    }
+});
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
 
-        const isMatch = await bcrypt.compare(password, user.password);
+    try {
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid credentials' });
+        const isValidPassword = await user.validPassword(password);
+        if (!isValidPassword) {
+            return res.status(400).json({ message: 'Invalid password' });
         }
 
         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        res.json({ message: 'Login successful', token });
-    } catch (err) {
-        res.status(500).json({ message: 'Error logging in', error: err.message });
+        res.status(200).json({ token });
+    } catch (error) {
+        console.error('Error during login', error);
+        res.status(500).json({ message: 'Error during login' });
     }
 });
 
