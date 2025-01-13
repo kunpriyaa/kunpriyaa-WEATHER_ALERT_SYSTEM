@@ -1,0 +1,26 @@
+{
+  "name": "weather_alert_system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/app.js",
+    "dev": "nodemon backend/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "bcryptjs": "^2.4.3",
+    "chart.js": "^4.4.7",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
