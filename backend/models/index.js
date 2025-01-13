@@ -1,15 +1,19 @@
-const { Pool } = require('pg');
+const mysql = require('mysql2');
 
-const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASS,
-    port: process.env.DB_PORT,
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT
 });
 
-pool.connect()
-    .then(() => console.log('Connected to the database'))
-    .catch(err => console.error('Database connection error', err.stack));
+connection.connect((err) => {
+  if (err) {
+    console.error('Database connection error:', err.stack);
+    return;
+  }
+  console.log('Connected to the MariaDB database');
+});
 
-module.exports = pool;
+module.exports = connection;
