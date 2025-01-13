@@ -1,19 +1,11 @@
-const mysql = require('mysql2');
+const { Sequelize } = require('sequelize');
 
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT
+const sequelize = new Sequelize('weather_alert_system', 'root', 'your_password', {
+  host: 'localhost',
+  dialect: 'mysql', 
+  logging: false, 
 });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Database connection error:', err.stack);
-    return;
-  }
-  console.log('Connected to the MariaDB database');
-});
+module.exports = sequelize;
 
 module.exports = connection;

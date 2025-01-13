@@ -1,27 +1,24 @@
-require('dotenv').config();
 const express = require('express');
-const path = require('path');
-const db = require('./models/index'); 
-const authRoutes = require('./routes/authRoutes'); 
-const userSettingRoutes = require('./routes/userSettingRoutes'); 
-const weatherRoutes = require('./routes/weatherRoutes');
-
+const db = require('./models/index');
+const authRoutes = require('./routes/authRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.use(express.json());
 
-app.use('/api/auth', authRoutes);
-app.use('/api/user-settings', userSettingRoutes);
-app.use('/api/weather', weatherRoutes); 
+db.authenticate()
+  .then(() => {
+    console.log('Database connected successfully');
+  })
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err); 
+  });
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
-});
+app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
+
 
 
