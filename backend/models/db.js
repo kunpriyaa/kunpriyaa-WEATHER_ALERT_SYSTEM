@@ -1,13 +1,11 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('weather_alert_system', 'root', 'your_password', {
-  host: 'localhost',
-  dialect: 'mysql', 
-  logging: false, 
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, {
+  host: process.env.DB_HOST,
+  dialect: 'mysql',
+  port: process.env.DB_PORT,
 });
 
-const db = {};
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+module.exports = sequelize;
 
-module.exports = db;
+

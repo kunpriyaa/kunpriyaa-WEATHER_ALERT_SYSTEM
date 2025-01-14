@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <title>Settings - Weather Alert System</title>
+</head>
+<body>
+  <div id="app">
+    <h1>Settings</h1>
+    <form id="settingsForm">
+      <label for="location">Favorite Location:</label>
+      <input type="text" id="location" placeholder="Enter a location" required>
+
+      <label for="alertFrequency">Alert Frequency:</label>
+      <select id="alertFrequency">
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+      </select>
+
+      <label for="emailAlert">Email Alert:</label>
+      <input type="checkbox" id="emailAlert" checked>
+
+      <button type="submit">Save Settings</button>
+    </form>
+    <div id="message"></div>
+  </div>
+
+  <script src="../js/settings.js"></script>
+</body>
+</html>

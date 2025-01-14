@@ -1,18 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>Weather Alert System</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Alert System</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <header>
     <h1>Weather Alert System</h1>
-    <form id="locationForm">
-        <input type="text" id="location" placeholder="Enter location" required>
-        <button type="submit">Get Weather</button>
-    </form>
-    <div id="weatherResult"></div>
-    <script src="js/app.js"></script>
+    <nav>
+      <ul>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="settings.html">Settings</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="search">
+      <h2>Search Weather</h2>
+      <form id="searchForm">
+        <input type="text" id="location" placeholder="Enter city name" required>
+        <button type="submit">Search</button>
+      </form>
+    </section>
+
+    <section id="weatherDetails" class="hidden">
+      <h2>Weather Details</h2>
+      <div id="weatherInfo"></div>
+      <button id="addFavorite">Add to Favorites</button>
+    </section>
+
+    <section id="favorites">
+      <h2>Favorites</h2>
+      <ul id="favoriteList"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Weather Alert System</p>
+  </footer>
+
+  <script src="js/index.js"></script>
 </body>
 </html>
+
+
+
+

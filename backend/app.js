@@ -1,24 +1,37 @@
 const express = require('express');
-const db = require('./models/index');
-const authRoutes = require('./routes/authRoutes');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const routes = require('./routes/index');
+const db = require('./models/db');
+const errorHandler = require('./middlewares/errorHandler');
+
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
-db.authenticate()
-  .then(() => {
-    console.log('Database connected successfully');
-  })
-  .catch((err) => {
-    console.error('Unable to connect to the database:', err); 
-  });
+app.use('/api', routes);
 
-app.use('/api/auth', authRoutes);
+app.use(errorHandler);
+
+db.authenticate()
+  .then(() => console.log('Database connected successfully'))
+  .catch((err) => console.error('Database connection failed:', err));
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+
+
+
+
+
+
+
+
 
 
 

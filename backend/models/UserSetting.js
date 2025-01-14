@@ -1,22 +1,23 @@
-const Sequelize = require('sequelize');
-const db = require('./index');
+const { DataTypes } = require('sequelize');
+const db = require('./db');
+const User = require('./User');
 
-const UserSetting = db.define('user_setting', {
-  userId: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'users',
-      key: 'id',
-    },
+const UserSetting = db.define('UserSetting', {
+  location: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-  alertTemperature: {
-    type: Sequelize.FLOAT,
-    allowNull: true,
+  alertFrequency: {
+    type: DataTypes.ENUM('daily', 'weekly'),
+    defaultValue: 'daily',
   },
-  alertRain: {
-    type: Sequelize.BOOLEAN,
-    allowNull: true,
+  emailAlert: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
   },
 });
 
+UserSetting.belongsTo(User); 
+
 module.exports = UserSetting;
+
