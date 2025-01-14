@@ -1,7 +1,29 @@
 {
+<<<<<<< HEAD
+=======
+  "name": "weather_alert_system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/app.js",
+    "dev": "nodemon backend/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+>>>>>>> b7c96ac61c1790a7aae9a8e640c9ff43e3193e21
   "dependencies": {
     "mysql2": "^3.12.0",
+<<<<<<< HEAD
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2"
+=======
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^6.9.16",
+    "pg": "^8.13.1",
+    "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+>>>>>>> b7c96ac61c1790a7aae9a8e640c9ff43e3193e21
   }
 }
