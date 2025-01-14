@@ -20,6 +20,7 @@ router.post('/signup', async (req, res) => {
         res.status(500).json({ message: 'Error during signup' });
     }
 });
+
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -43,3 +44,7 @@ router.post('/login', async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
