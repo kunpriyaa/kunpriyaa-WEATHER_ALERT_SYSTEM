@@ -1,30 +1,12 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
-const weatherRoutes = require('./routes/weatherRoutes');
-
-
-dotenv.config();
+const sequelize = require('./models/db');
 
 const app = express();
-app.use(bodyParser.json());
-app.use('/api', weatherRoutes);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(` Server running at http://localhost:${PORT}`);
+sequelize.authenticate()
+  .then(() => console.log('Database connected!'))
+  .catch(err => console.error('Failed to connect to the database', err));
+
+app.listen(3000, () => {
+  console.log('Server running at http://localhost:3000');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-

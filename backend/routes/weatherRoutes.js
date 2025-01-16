@@ -1,8 +1,50 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const WeatherData = require('../models/weather_data');
-const User = require('../models/User');
+const sequelize = require('../models/db');
+const { DataTypes } = require('sequelize');
 const router = express.Router();
+
+const WeatherData = sequelize.define('WeatherData', {
+  location_name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  temperature: {
+    type: DataTypes.FLOAT,
+    allowNull: false
+  },
+  humidity: {
+    type: DataTypes.FLOAT,
+    allowNull: false
+  },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }
+}, {
+  tableName: 'weather_data',
+  timestamps: false
+});
+
+// โมเดล User
+const User = sequelize.define('User', {
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
+}, {
+  tableName: 'users',
+  timestamps: false
+});
 
 router.get('/weather/:location', async (req, res) => {
   const location = req.params.location;
@@ -55,4 +97,3 @@ router.post('/register', async (req, res) => {
 });
 
 module.exports = router;
-
