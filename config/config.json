@@ -1,24 +1,26 @@
 {
-    "development": {
-      "username": "root",
-      "password": "210448",
-      "database": "weather_alert_system",
-      "host": "localhost",
-      "dialect": "mysql"
-    },
-    "test": {
-      "username": "root",
-      "password": "210448",
-      "database": "weather_alert_system_test",
-      "host": "localhost",
-      "dialect": "mysql"
-    },
-    "production": {
-      "username": "root",
-      "password": "210448",
-      "database": "weather_alert_system_prod",
-      "host": "localhost",
-      "dialect": "mysql"
-    }
+  "development": {
+    "username": "root",
+    "password": "210448",
+    "database": "weather_alert_system",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "210448",
+    "database": "weather_alert_system_test",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "210448",
+    "database": "weather_alert_system_prod",
+    "host": "localhost",
+    "dialect": "mysql"
   }
-  
+}
+
+
+ 
