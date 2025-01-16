@@ -1,62 +1,46 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-<<<<<<< HEAD
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
 }
 
-#app {
-  max-width: 600px;
-  margin: 0 auto;
+header {
+  background-color: #007bff;
+  color: white;
+  text-align: center;
   padding: 20px;
-  background-color: #fff;
+}
+
+#weather-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+#weather-info {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
+#signup {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-button {
-  background-color: #4CAF50;
-  color: white;
+form input, form button {
+  margin: 10px 0;
   padding: 10px;
+  width: 100%;
+}
+
+form button {
+  background-color: #28a745;
+  color: white;
   border: none;
   cursor: pointer;
-  width: 100%;
 }
-
-button:hover {
-  background-color: #45a049;
-}
-
-
-=======
-  text-align: center;
-}
-
-h1 {
-  color: #333;
-}
-
-#weatherInfo {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  color: #2e7d32;
-}
-
-p {
-  font-size: 18px;
-}
-
->>>>>>> b7c96ac61c1790a7aae9a8e640c9ff43e3193e21
-  

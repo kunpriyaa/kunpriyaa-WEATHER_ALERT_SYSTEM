@@ -1,12 +1,10 @@
-const express = require('express');
-const authRoutes = require('./authRoutes');
-const weatherRoutes = require('./weatherRoutes');
-const userSettingRoutes = require('./userSettingRoutes');
-
+const express = require('express'); 
 const router = express.Router();
+const authRoutes = require('./authRoutes');
+const userSettingRoutes = require('./userSettingRoutes'); 
 
-router.use('/auth', authRoutes);
-router.use('/weather', weatherRoutes);
-router.use('/settings', userSettingRoutes);
+router.use('/auth', authRoutes);  
+router.use('/user-settings', userSettingRoutes);  
 
 module.exports = router;
+

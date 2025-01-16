@@ -1,28 +1,20 @@
-document.getElementById('loginForm').addEventListener('submit', async function (e) {
+// auth.js
+export function handleSignUp() {
+  const signupForm = document.getElementById('signup-form');
+  
+  signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
-  
+
+    const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-  
-    try {
-      const response = await fetch('http://localhost:3000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-  
-      const result = await response.json();
-      if (response.ok) {
-        localStorage.setItem('token', result.token);
-        document.getElementById('message').textContent = 'Login successful!';
-        window.location.href = 'settings.html'; 
-      } else {
-        document.getElementById('message').textContent = result.message;
-      }
-    } catch (error) {
-      console.error(error);
-      document.getElementById('message').textContent = 'Error during login.';
+
+    if (username && email) {
+      alert(`สมัครสมาชิกสำเร็จ: ${username}, ${email}`);
+    } else {
+      alert('กรุณากรอกข้อมูลให้ครบ');
     }
   });
+}
+
   
   
