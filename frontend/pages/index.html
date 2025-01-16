@@ -3,20 +3,198 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
-  <title>Weather Alert System</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Weather App</title>
 </head>
 <body>
-  <div id="app">
-    <h1>Weather Alert System</h1>
-    <form id="registerForm">
-      <input type="email" id="email" placeholder="Enter your email" required>
-      <input type="password" id="password" placeholder="Enter your password" required>
-      <button type="submit">Register</button>
-    </form>
-    <div id="message"></div>
+  <h1>Weather Information</h1>
+  
+  <form id="weather-form">
+    <label for="inputType">Select weather input method:</label>
+    <select id="inputType" name="inputType" required>
+      <option value="">Select method</option>
+      <option value="dropdown">By Province/City (Dropdown)</option>
+      <option value="text">By City/Province (Text)</option>
+    </select>
+
+    <div id="text-input-container" style="display: none;">
+      <label for="city">Enter City/Province:</label>
+      <input type="text" id="city" name="city" placeholder="Enter city or province" required>
+    </div>
+
+    <div id="dropdown-input-container" style="display: none;">
+      <label for="province">Province:</label>
+      <select id="province" name="province" required>
+        <option value="">Select Province</option>
+        <option value="Bangkok">Bangkok</option>
+        <option value="Chiang Mai">Chiang Mai</option>
+      </select>
+
+      <label for="district">District:</label>
+      <select id="district" name="district" required disabled>
+        <option value="">Select District</option>
+      </select>
+
+      <label for="subdistrict">Subdistrict:</label>
+      <select id="subdistrict" name="subdistrict" disabled>
+        <option value="">Select Subdistrict</option>
+      </select>
+
+      <label for="village">Village:</label>
+      <select id="village" name="village" disabled>
+        <option value="">Select Village</option>
+      </select>
+    </div>
+
+    <button type="submit">Get Weather</button>
+  </form>
+
+  <div id="weather">
   </div>
 
-  <script src="js/auth.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+
+    const data = {
+      Bangkok: {
+        districts: {
+          "Khlong Toei": {
+            subdistricts: ["Khlong Toei", "Sukhumvit"],
+            villages: ["Village 1", "Village 2"]
+          },
+          "Sathon": {
+            subdistricts: ["Sathon", "Chong Nonsi"],
+            villages: ["Village A", "Village B"]
+          }
+        }
+      },
+      "Chiang Mai": {
+        districts: {
+          "Mueang": {
+            subdistricts: ["Chang Phueak", "Nimmanhaemin"],
+            villages: ["Village X", "Village Y"]
+          }
+        }
+      }
+    };
+
+    document.getElementById('inputType').addEventListener('change', function() {
+      const inputType = this.value;
+      const textInputContainer = document.getElementById('text-input-container');
+      const dropdownInputContainer = document.getElementById('dropdown-input-container');
+      
+      if (inputType === 'text') {
+        textInputContainer.style.display = 'block';
+        dropdownInputContainer.style.display = 'none';
+      } else if (inputType === 'dropdown') {
+        dropdownInputContainer.style.display = 'block';
+        textInputContainer.style.display = 'none';
+      } else {
+        textInputContainer.style.display = 'none';
+        dropdownInputContainer.style.display = 'none';
+      }
+    });
+
+    document.getElementById('province').addEventListener('change', function() {
+      const province = this.value;
+      const districtSelect = document.getElementById('district');
+      const subdistrictSelect = document.getElementById('subdistrict');
+      const villageSelect = document.getElementById('village');
+   
+      subdistrictSelect.innerHTML = '<option value="">Select Subdistrict</option>';
+      villageSelect.innerHTML = '<option value="">Select Village</option>';
+      subdistrictSelect.disabled = true;
+      villageSelect.disabled = true;
+
+      if (province && data[province]) {
+        const districts = data[province].districts;
+    
+        districtSelect.innerHTML = '<option value="">Select District</option>';
+        Object.keys(districts).forEach(district => {
+          districtSelect.innerHTML += `<option value="${district}">${district}</option>`;
+        });
+        
+        districtSelect.disabled = false;
+      } else {
+        districtSelect.disabled = true;
+      }
+    });
+    document.getElementById('district').addEventListener('change', function() {
+      const province = document.getElementById('province').value;
+      const district = this.value;
+      const subdistrictSelect = document.getElementById('subdistrict');
+      const villageSelect = document.getElementById('village');
+    
+      villageSelect.innerHTML = '<option value="">Select Village</option>';
+      villageSelect.disabled = true;
+      
+      if (province && district && data[province] && data[province].districts[district]) {
+        const subdistricts = data[province].districts[district].subdistricts;
+
+        subdistrictSelect.innerHTML = '<option value="">Select Subdistrict</option>';
+        subdistricts.forEach(subdistrict => {
+          subdistrictSelect.innerHTML += `<option value="${subdistrict}">${subdistrict}</option>`;
+        });
+        
+        subdistrictSelect.disabled = false;
+      } else {
+        subdistrictSelect.disabled = true;
+      }
+    });
+
+    document.getElementById('subdistrict').addEventListener('change', function() {
+      const province = document.getElementById('province').value;
+      const district = document.getElementById('district').value;
+      const subdistrict = this.value;
+      const villageSelect = document.getElementById('village');
+
+      if (province && district && subdistrict && data[province] && data[province].districts[district]) {
+        const villages = data[province].districts[district].villages;
+        
+        villageSelect.innerHTML = '<option value="">Select Village</option>';
+        villages.forEach(village => {
+          villageSelect.innerHTML += `<option value="${village}">${village}</option>`;
+        });
+        
+        villageSelect.disabled = false;
+      } else {
+        villageSelect.disabled = true;
+      }
+    });
+
+    document.getElementById('weather-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      let location = '';
+      const inputType = document.getElementById('inputType').value;
+
+      if (inputType === 'dropdown') {
+        const province = document.getElementById('province').value;
+        const district = document.getElementById('district').value;
+        const subdistrict = document.getElementById('subdistrict').value;
+        const village = document.getElementById('village').value;
+        
+        location = `${province}, ${district}, ${subdistrict}, ${village}`;
+      } else if (inputType === 'text') {
+        location = document.getElementById('city').value;
+      }
+
+      try {
+        const response = await fetch(`/weather?location=${encodeURIComponent(location)}`);
+        const data = await response.json();
+        
+        const weatherDiv = document.getElementById('weather');
+        weatherDiv.innerHTML = `
+          <h2>Weather in ${data.city}</h2>
+          <p>Temperature: ${data.temperature}°C</p>
+          <p>Humidity: ${data.humidity}%</p>
+          <p>Description: ${data.description}</p>
+        `;
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+        document.getElementById('weather').innerHTML = '<p>Error fetching weather data.</p>';
+      }
+    });
+  </script>
 </body>
 </html>
