@@ -13,11 +13,14 @@ app.use(express.json());
 app.use('/api', weatherRoutes);
 
 db.authenticate()
-  .then(() => console.log('เชื่อมต่อฐานข้อมูลสำเร็จ'))
-  .catch((err) => console.error('ไม่สามารถเชื่อมต่อฐานข้อมูลได้:', err));
+  .then(() => console.log('Success'))
+  .catch((err) => console.error('No success:', err));
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
+
 
 
 
