@@ -1,48 +1,45 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบแจ้งเตือนสภาพอากาศ</title>
-  <link rel="stylesheet" href="styles/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Alert System</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>ระบบแจ้งเตือนสภาพอากาศ</h1>
-  </header>
-  
-  <section id="weather-container">
-    <div id="weather-info">
-      <h2>ข้อมูลสภาพอากาศ</h2>
-      <p id="temperature">อุณหภูมิ: </p>
-      <p id="humidity">ความชื้น: </p>
-      <p id="rain">ปริมาณฝน: </p>
+    <div class="navbar">
+        <div class="menu-icon" id="menu-icon">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div class="menu-links">
+            <a href="#">พยากรณ์อากาศ</a>
+            <a href="#">สภาพอากาศรายเดือน</a>
+            <a href="#">การพยากรณ์ล่วงหน้า 10 วัน</a>
+        </div>
+        <div class="settings-wrapper">
+            <div class="settings-icon" id="settings-icon">
+                ⚙️
+            </div>
+            <button class="settings-btn">ลงชื่อเข้าใช้</button>
+        </div>
     </div>
-    <div id="signup">
-      <h3>สมัครสมาชิก</h3>
-      <form id="signup-form">
-        <input type="text" id="username" placeholder="ชื่อผู้ใช้" required>
-        <input type="email" id="email" placeholder="อีเมล" required>
-        <button type="submit">สมัครสมาชิก</button>
-      </form>
-    </div>
-    <div id="settings">
-      <h3>การตั้งค่า</h3>
-      <form id="settings-form">
-        <label>
-          หน่วยอุณหภูมิ:
-          <input type="radio" name="temperature-unit" value="Celsius" checked> Celsius
-          <input type="radio" name="temperature-unit" value="Fahrenheit"> Fahrenheit
-        </label>
-        <label>
-          <input type="checkbox" id="notifications"> เปิดการแจ้งเตือน
-        </label>
-        <button type="submit">บันทึกการตั้งค่า</button>
-      </form>
-    </div>
-  </section>
 
-  <script src="js/app.js"></script>
+    <div class="container">
+        <!-- กรอบค้นหาตำแหน่งที่ตั้ง -->
+        <div class="search-container">
+            <input type="text" id="search-location" placeholder="ค้นหาตำแหน่งที่ตั้ง">
+            <button id="search-btn">🔍</button>
+        </div>
+
+        <!-- กรอบแสดงสภาพอากาศ -->
+        <div class="weather-container">
+            <h2 id="location-name">พะเยา</h2>
+            <p><strong>อุณหภูมิ:</strong> <span id="temperature">25</span>°C</p>
+        </div>
+    </div>
+
+    <script src="js/weather.js"></script>
 </body>
 </html>
-

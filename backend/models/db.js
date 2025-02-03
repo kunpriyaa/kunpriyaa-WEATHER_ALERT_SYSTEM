@@ -1,25 +1,23 @@
-const { Sequelize } = require('sequelize');
 require('dotenv').config();
-
-// ตรวจสอบว่าใช้ค่ารหัสผ่านจาก .env
+const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASS,
+  process.env.DB_NAME || 'weather_alert_system',
+  process.env.DB_USER || 'ASUS',
+  process.env.DB_PASS || '212548',
   {
-    host: process.env.DB_HOST,
+    host: process.env.DB_HOST || 'localhost',
+    dialect: 'mysql',
     port: process.env.DB_PORT || 3306,
-    dialect: 'mariadb',
     logging: false,
   }
 );
-
-sequelize.authenticate()
-  .then(() => {
-    console.log('Database connection successful!');
-  })
-  .catch((err) => {
-    console.error('Database connection failed!', err.message);
-  });
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connected to the database successfully!');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error.message);
+  }
+})();
 
 module.exports = sequelize;

@@ -22,6 +22,7 @@ const WeatherData = sequelize.define('WeatherData', {
   wind_speed: {
     type: DataTypes.DECIMAL(5, 2),
     allowNull: false,
+    defaultValue: 0,
   },
   weather_description: {
     type: DataTypes.STRING,
