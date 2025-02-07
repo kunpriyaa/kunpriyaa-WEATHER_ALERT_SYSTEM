@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Forecast</title>
+    <title>พยากรณ์อากาศ</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
@@ -26,13 +26,16 @@
             <input type="text" id="search-location" placeholder="ค้นหาตำแหน่งที่ตั้ง">
             <button id="search-btn">🔍</button>
         </div>
+        
         <div id="status-message" style="display: none; text-align: center; margin-bottom: 20px;">
-            <strong>กรุณากรอกชื่อสถานที่ เพื่อรับคำพยากรณ์</strong>
+            <strong>อากาศวันนี้เป็นอย่างไร?</strong>
         </div>
+
         <div id="weather-info" class="weather-info-container" style="display: none;">
             <div class="weather-card">
-                <img id="weather-icon" class="weather-icon" src="" alt="Weather Icon">
                 <h3 id="location-name"></h3>
+                <p id="temperature"></p>
+                <img id="weather-icon" src="" alt="weather icon">
             </div>
             <div class="weather-details">
                 <div class="weather-detail">
@@ -46,6 +49,9 @@
                 </div>
                 <div class="weather-detail">
                     <strong>ความเร็วลม:</strong> <span id="wind-speed"></span> m/s
+                </div>
+                <div class="weather-detail">
+                    <strong>ฝน:</strong> <span id="rain-status"></span>
                 </div>
             </div>
         </div>

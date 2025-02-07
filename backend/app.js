@@ -1,4 +1,4 @@
-const express = require('express'); 
+const express = require('express');   
 const path = require('path');
 const axios = require('axios');
 const cors = require('cors');
@@ -11,11 +11,17 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
+
+app.get('/weather-forecast', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/weather-forecast.html'));
+});
+
 app.get('/weather-monthly', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/weather-monthly.html'));
 });
-app.get('/weather', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/pages/weather.html'));
+
+app.get('/weather-10days', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/weather-10days.html'));
 });
 
 app.get('/api/weather', async (req, res) => {
@@ -23,13 +29,11 @@ app.get('/api/weather', async (req, res) => {
   if (!location) {
     return res.status(400).json({ error: 'Location is required' });
   }
-  
+
   try {
-    const apiKey = 'd9546f4994e19952b54352199d85c571';
+    const apiKey = 'your-api-key';
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
-  
-    console.log(`Fetching weather data for: ${location}`);
-    
+
     const response = await axios.get(url);
     console.log('Weather Data:', response.data);
 
@@ -40,6 +44,8 @@ app.get('/api/weather', async (req, res) => {
       humidity: weatherData.main.humidity,
       weather_description: weatherData.weather[0].description,
       wind_speed: weatherData.wind.speed,
+      icon: weatherData.weather[0].icon,
+      rain: weatherData.rain ? weatherData.rain['1h'] : 0 
     });
   } catch (error) {
     console.error('Error fetching weather data:', error);

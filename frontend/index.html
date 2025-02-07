@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Alert System</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
     <div class="navbar">
@@ -14,32 +14,35 @@
             <span class="bar"></span>
         </div>
         <div class="menu-links">
-            <a href="#">พยากรณ์อากาศ</a>
-            <a href="#">สภาพอากาศรายเดือน</a>
-            <a href="#">การพยากรณ์ล่วงหน้า 10 วัน</a>
-        </div>
-        <div class="settings-wrapper">
-            <div class="settings-icon" id="settings-icon">
-                ⚙️
-            </div>
-            <button class="settings-btn">ลงชื่อเข้าใช้</button>
+            <a href="/" id="home-link">หน้าหลัก</a>
+            <a href="/weather-forecast" id="weather-forecast-link">พยากรณ์อากาศ</a>
+            <a href="/weather-monthly" id="weather-monthly-link">สภาพอากาศรายเดือน</a>
+            <a href="/weather-10days" id="weather-10days-link">การพยากรณ์ล่วงหน้า 10 วัน</a>
         </div>
     </div>
 
     <div class="container">
-        <!-- กรอบค้นหาตำแหน่งที่ตั้ง -->
         <div class="search-container">
             <input type="text" id="search-location" placeholder="ค้นหาตำแหน่งที่ตั้ง">
             <button id="search-btn">🔍</button>
         </div>
-
-        <!-- กรอบแสดงสภาพอากาศ -->
-        <div class="weather-container">
-            <h2 id="location-name">พะเยา</h2>
-            <p><strong>อุณหภูมิ:</strong> <span id="temperature">25</span>°C</p>
+        <div id="status-message" style="display: none; text-align: center; margin-bottom: 20px;">
+            <strong>อากาศวันนี้เป็นอย่างไร? พิมพ์เพื่อค้นหาสถานที่ที่คุณต้องการ</strong>
+        </div>
+        <div id="weather-info" class="weather-info-container">
+            <div class="weather-card">
+                <h3 id="location-name">กรุณาค้นหาสถานที่</h3>
+                <p>อุณหภูมิ: <span id="temperature">-</span>°C</p>
+            </div>
+            <div class="weather-card">
+                <p><strong>ความชื้น:</strong> <span id="humidity">-</span>%</p>
+                <p><strong>ความเร็วลม:</strong> <span id="wind-speed">-</span> m/s</p>
+                <p><strong>รายละเอียดสภาพอากาศ:</strong> <span id="description">-</span></p>
+                <p><strong>ฝนตกหรือไม่:</strong> <span id="rain-status">-</span></p>
+            </div>
         </div>
     </div>
 
-    <script src="js/weather.js"></script>
+    <script src="../js/weather.js"></script>
 </body>
 </html>
