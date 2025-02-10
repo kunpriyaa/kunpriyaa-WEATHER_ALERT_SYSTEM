@@ -3,63 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather UI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="../css/styles.css">
     <style>
         body {
             background: linear-gradient(to bottom, #a2a2f1, #b9c4e4, #ffffff, #c3b2dd);
-            color: #000000;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center">
-    
-    <nav class="w-full bg-gray-800 text-white py-4 px-6 flex justify-between items-center">
-        <div class="text-xl cursor-pointer">☰</div>
-        <div class="flex space-x-6">
-            <a href="#" class="hover:text-gray-400">หน้าหลัก</a>
-            <a href="#" class="hover:text-gray-400">พยากรณ์อากาศ</a>
-            <a href="#" class="hover:text-gray-400">สภาพอากาศรายเดือน</a>
-            <a href="#" class="hover:text-gray-400">การพยากรณ์ล่วงหน้า 10 วัน</a>
+<body>
+    <div class="navbar">
+        <div class="menu-icon" id="menu-icon">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </div>
-    </nav>
-    <div class="mt-8 w-full max-w-xl flex items-center bg-white p-1 rounded-md shadow-md">
-        <input type="text" placeholder="ค้นหาตำแหน่งที่ตั้ง" class="w-full px-3 py-2 outline-none text-black border border-gray-400 rounded-md text-sm">
-        <button class="bg-gray-800 w-10 h-10 flex items-center justify-center rounded-md ml-1">
-            🔍
-        </button>
-    </div>
-    
-    
-    <div class="w-full max-w-2xl bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg text-black mt-8">
-        <h1 class="text-lg font-light text-gray-900"></h1>
-        
-        <div class="flex justify-between items-center mt-4">
-            <button class="bg-white/20 px-4 py-2 rounded-lg text-gray-900">สภาพอากาศปัจจุบัน</button>
-            <div class="flex items-center gap-2">
-                <span class="text-xl"></span>
-            </div>
-        </div>
-        
-        <div class="mt-6 bg-white/20 p-6 rounded-lg">
-            <h2 class="text-lg">สภาพอากาศปัจจุบัน</h2>
-            <div class="flex items-center mt-2 text-5xl font-light">
-                <span></span>
-                <span></span>
-            </div>
-            <p class="text-gray-900"></p>
-            <p class="text-gray-800"></p>
-            <p class="mt-2 text-gray-800"></p>
-        </div>
-        
-        <div class="mt-6 grid grid-cols-2 gap-4 text-gray-900 text-sm">
-            <div>คุณภาพอากาศ: <span class="text-red-500"></span></div>
-            <div>ลม: <span></span></div>
-            <div>ความชื้น: <span></span></div>
-            <div>ทัศนวิสัย: <span></span></div>
-            <div>ความกดอากาศ: <span></span></div>
-            <div>จุดน้ำค้าง: <span></span></div>
+        <div class="menu-links">
+            <a href="/" id="home-link">หน้าหลัก</a>
+            <a href="/weather-forecast" id="weather-forecast-link">พยากรณ์อากาศ</a>
+            <a href="/weather-10days" id="weather-10days-link">การพยากรณ์ล่วงหน้า 10 วัน</a>
         </div>
     </div>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="search-location" placeholder="ค้นหาตำแหน่งที่ตั้ง">
+            <button id="search-btn">🔍</button>
+        </div>
+        <div id="weather-info" class="weather-info-container">
+            <div id="weather-info" class="w-full max-w-2xl bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg text-black mt-8 hidden">
+                <h3 id="location-name" class="text-lg font-light text-gray-900">อากาศวันนี้เป็นอย่างไร? พิมพ์เพื่อค้นหาสถานที่ที่คุณต้องการ</h3>
+                <div class="mt-4 text-xl font-light">🌡️ อุณหภูมิ: <span id="temperature">-</span>°C</div>
+                <div class="mt-2 text-gray-900">💧 ความชื้น: <span id="humidity">-</span>%</div>
+                <div class="mt-2 text-gray-800">🌬️ ความเร็วลม: <span id="wind-speed">-</span> km/h</div>
+                <div class="mt-2 text-gray-800">📌 สภาพอากาศ: <span id="description">-</span></div>
+                <div class="mt-2 text-gray-800">🌧️ สถานะฝน: <span id="rain-status">-</span></div>
+                <img id="weather-icon" src="" alt="Weather Icon" class="mt-4 w-16 h-16 hidden">
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/weather.js"></script>
 </body>
 </html>
+

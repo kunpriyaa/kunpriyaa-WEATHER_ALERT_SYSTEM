@@ -38,6 +38,7 @@ document.getElementById('search-btn').addEventListener('click', async () => {
         const descriptionElement = document.getElementById('description');
         const rainStatusElement = document.getElementById('rain-status');
         const weatherIconElement = document.getElementById('weather-icon');
+        const currentTimeElement = document.getElementById('current-time');
 
         if (locationNameElement) locationNameElement.textContent = data.location_name;
         if (temperatureElement) temperatureElement.textContent = `${data.temperature}°C`;
@@ -52,9 +53,12 @@ document.getElementById('search-btn').addEventListener('click', async () => {
             weatherIconElement.src = `http://openweathermap.org/img/wn/${data.icon}.png`;
         }
 
+        const currentTime = new Date().toLocaleTimeString('th-TH');
+        if (currentTimeElement) currentTimeElement.textContent = currentTime;
+
         document.getElementById('weather-info').style.display = 'block';
     } catch (error) {
         console.error('Error:', error);
-        alert('Error: ' + error.message);
+        alert('เกิดข้อผิดพลาด: ' + error.message);
     }
 });
