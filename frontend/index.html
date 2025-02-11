@@ -9,6 +9,13 @@
         body {
             background: linear-gradient(to bottom, #a2a2f1, #b9c4e4, #ffffff, #c3b2dd);
         }
+        #weather-trend-container {
+            margin-top: 20px;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -22,6 +29,8 @@
             <a href="/" id="home-link">หน้าหลัก</a>
             <a href="/weather-forecast" id="weather-forecast-link">พยากรณ์อากาศ</a>
             <a href="/weather-10days" id="weather-10days-link">การพยากรณ์ล่วงหน้า 10 วัน</a>
+            <a href="/weather-data-entry" id="weather-data-entry-link">บันทึกข้อมูลอากาศ</a>
+            <a href="/admin" id="admin-link">Admin</a>
         </div>
     </div>
 
@@ -40,8 +49,14 @@
                 <p>เวลา: <span id="current-time">-</span></p>
             </div>
         </div>
+
+        <div id="weather-trend-container">
+            <h3>กราฟแนวโน้มอากาศ</h3>
+            <canvas id="weather-trend-chart" width="400" height="200"></canvas>
+        </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/weather.js"></script>
 </body>
 </html>

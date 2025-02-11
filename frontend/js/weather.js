@@ -22,9 +22,12 @@ document.getElementById('search-btn').addEventListener('click', async () => {
         return;
     }
 
+    const apiKey = 'd9546f4994e19952b54352199d85c571';
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric&lang=th`;
+
     try {
-        const response = await fetch(`/api/weather?location=${location}`);
-        
+        const response = await fetch(apiUrl);
+
         if (!response.ok) {
             throw new Error('เกิดข้อผิดพลาดในการดึงข้อมูลสภาพอากาศ');
         }
@@ -40,21 +43,23 @@ document.getElementById('search-btn').addEventListener('click', async () => {
         const weatherIconElement = document.getElementById('weather-icon');
         const currentTimeElement = document.getElementById('current-time');
 
-        if (locationNameElement) locationNameElement.textContent = data.location_name;
-        if (temperatureElement) temperatureElement.textContent = `${data.temperature}°C`;
-        if (humidityElement) humidityElement.textContent = data.humidity;
-        if (windSpeedElement) windSpeedElement.textContent = data.wind_speed;
-        if (descriptionElement) descriptionElement.textContent = data.weather_description;
+        if (locationNameElement) locationNameElement.textContent = data.name;
+        if (temperatureElement) temperatureElement.textContent = `${data.main.temp}°C`;
+        if (humidityElement) humidityElement.textContent = `${data.main.humidity}%`;
+        if (windSpeedElement) windSpeedElement.textContent = `${data.wind.speed} m/s`;
+        if (descriptionElement) descriptionElement.textContent = data.weather[0].description;
         if (rainStatusElement) {
             const rainStatus = data.rain ? "ฝนตก" : "ไม่มีฝน";  
             rainStatusElement.textContent = rainStatus;
         }
         if (weatherIconElement) {
-            weatherIconElement.src = `http://openweathermap.org/img/wn/${data.icon}.png`;
+            weatherIconElement.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
         }
 
         const currentTime = new Date().toLocaleTimeString('th-TH');
         if (currentTimeElement) currentTimeElement.textContent = currentTime;
+
+        displayWeatherTrend(data);
 
         document.getElementById('weather-info').style.display = 'block';
     } catch (error) {
@@ -62,3 +67,72 @@ document.getElementById('search-btn').addEventListener('click', async () => {
         alert('เกิดข้อผิดพลาด: ' + error.message);
     }
 });
+
+function displayWeatherTrend(data) {
+    const ctx = document.getElementById('weather-trend-chart');
+    if (!ctx) {
+        console.error("Canvas element not found");
+        return;
+    }
+    
+    const chartContext = ctx.getContext('2d');
+    
+    const labels = data.daily ? data.daily.map(day => day.date) : [];
+    const temperatures = data.daily ? data.daily.map(day => day.temperature) : [];
+    const rainfall = data.daily ? data.daily.map(day => day.rainfall) : [];
+
+    const chartData = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'อุณหภูมิ (°C)',
+                data: temperatures,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+                tension: 0.4
+            },
+            {
+                label: 'ปริมาณฝน (mm)',
+                data: rainfall,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                fill: true,
+                tension: 0.4
+            }
+        ]
+    };
+
+    const config = {
+        type: 'line',
+        data: chartData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                },
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'วันที่'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'ค่าการวัด'
+                    }
+                }
+            }
+        }
+    };
+
+    new Chart(chartContext, config);
+}

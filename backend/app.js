@@ -1,4 +1,4 @@
-const express = require('express');   
+const express = require('express');    
 const path = require('path');
 const axios = require('axios');
 const cors = require('cors');
@@ -15,13 +15,17 @@ app.get('/', (req, res) => {
 app.get('/weather-forecast', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/weather-forecast.html'));
 });
-
-app.get('/weather-monthly', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/pages/weather-monthly.html'));
-});
-
 app.get('/weather-10days', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/weather-10days.html'));
+});
+app.get('/weather-data-entry', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/weather-data-entry.html'));
+});
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/admin-login.html'));
+});
+app.get('/admin-dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/pages/admin-dashboard.html'));
 });
 
 app.get('/api/weather', async (req, res) => {
