@@ -20,6 +20,10 @@
             <a href="/weather-data-entry" id="weather-data-entry-link">บันทึกข้อมูลอากาศ</a>
             <a href="/admin" id="admin-link">Admin</a>
         </div>
+        <div class="admin-info">
+            <span id="admin-name">กำลังโหลดข้อมูล...</span>
+            <button id="logout-btn">ออกจากระบบ</button>
+        </div>
     </div>
 
     <div class="container">
@@ -32,5 +36,23 @@
     </div>
 
     <script src="../js/admin.js"></script>
+
+    <script>
+        const adminName = document.getElementById("admin-name");
+        const logoutBtn = document.getElementById("logout-btn");
+
+        const adminToken = localStorage.getItem("adminToken");
+
+        if (adminToken) {
+            const decodedToken = JSON.parse(atob(adminToken.split('.')[1]));
+            adminName.textContent = `สวัสดี, ${decodedToken.username}`;
+            logoutBtn.addEventListener("click", () => {
+                localStorage.removeItem("adminToken");
+                window.location.href = "admin-login.html";
+            });
+        } else {
+            window.location.href = "admin-login.html";
+        }
+    </script>
 </body>
 </html>
