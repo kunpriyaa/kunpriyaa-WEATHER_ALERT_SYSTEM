@@ -1,5 +1,7 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {  
     const loginBtn = document.getElementById("login-btn");
+    const correctUsername = "admin";  // ชื่อผู้ใช้ที่ตั้งไว้
+    const correctPassword = "12345";  // รหัสผ่านที่ตั้งไว้
 
     loginBtn.addEventListener("click", async () => {
         const username = document.getElementById("admin-username").value.trim();
@@ -11,26 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
             errorText.style.display = "block";
             return;
         }
-
-        try {
-            const response = await fetch("/api/admin/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                localStorage.setItem("adminToken", data.token);
-                window.location.href = "admin-dashboard.html";
-            } else {
-                errorText.textContent = data.message;
-                errorText.style.display = "block";
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            errorText.textContent = "เกิดข้อผิดพลาดในการเข้าสู่ระบบ";
+        if (username === correctUsername && password === correctPassword) {
+            localStorage.setItem("adminToken", "admin-session-token");
+            window.location.href = "/admin-dashboard.html";
+        } else {
+            errorText.textContent = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
             errorText.style.display = "block";
         }
     });

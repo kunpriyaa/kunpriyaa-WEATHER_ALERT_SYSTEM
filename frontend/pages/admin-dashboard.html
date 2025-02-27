@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -44,8 +44,7 @@
         const adminToken = localStorage.getItem("adminToken");
 
         if (adminToken) {
-            const decodedToken = JSON.parse(atob(adminToken.split('.')[1]));
-            adminName.textContent = `สวัสดี, ${decodedToken.username}`;
+            adminName.textContent = `สวัสดี, admin`;
             logoutBtn.addEventListener("click", () => {
                 localStorage.removeItem("adminToken");
                 window.location.href = "admin-login.html";
