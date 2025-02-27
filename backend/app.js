@@ -21,9 +21,11 @@ app.get('/weather-10days', (req, res) => {
 app.get('/weather-data-entry', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/weather-data-entry.html'));
 });
+
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/admin-login.html'));
 });
+
 app.get('/admin-dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/admin-dashboard.html'));
 });
