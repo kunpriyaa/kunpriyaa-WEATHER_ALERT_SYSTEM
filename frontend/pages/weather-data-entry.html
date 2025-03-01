@@ -1,114 +1,147 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ระบบบันทึกข้อมูลสภาพอากาศ</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บันทึกข้อมูลอากาศ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        .btn-clear {
+            margin-top: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        body {
+            background-image: url('https://files.oaiusercontent.com/file-QU2iDzwb3bmKBSpSc62o1e?se=2025-03-01T20%3A15%3A52Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Ddbb5fc66-22c6-48ac-abfd-7258865d679e.webp&sig=FUhis2xDEUgXZ7N7prM1Xk3ihWoTnAdp9FNM4Bywsbg%3D'); 
+            background-size: cover; 
+            background-position: center center;
+            background-attachment: fixed; 
+            color: #000000; 
+            min-height: 100vh; 
+        }
+        #weather-trend-container {
+            margin-top: 20px;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
-<style>
-    body {
-background: linear-gradient(to bottom, #b3b3f1, #d4d4f7, #ffffff,#c3b2dd);
-background-attachment: fixed;
-margin: 0;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: rgb(49, 48, 48);
-        padding: 10px 20px;
-    }
-
-    .menu-icon img {
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-    }
-
-    .menu-links a {
-        color: white;
-        text-decoration: none;
-        margin: 0 15px;
-        font-weight: bold;
-        transition: color 0.3s;
-    }
-
-    .menu-links a:hover {
-        color: #ffcc00;
-    }
-
-    .weather-card {
-        border: 2px solid #99c6f5;
-        border-radius: 10px;
-        padding: 15px;
-        background-color: rgb(255, 255, 255);
-        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-        text-align: center;
-        min-width: 150px;
-    }
-
-    .forecast-container {
-        display: flex;
-        gap: 10px;
-        overflow-x: auto;
-        padding: 10px;
-        border-radius: 8px;
-    }
-</style>
 <body>
-    
-  
-    <div class="navbar">
-        <div class="menu-icon" id="menu-icon">
-            
-        </div>
-        <div class="menu-links">
-            <a href="/" id="home-link">หน้าหลัก</a>
-            <a href="/weather-forecast" id="weather-forecast-link">พยากรณ์อากาศ</a>
-            <a href="/weather-10days" id="weather-10days-link">การพยากรณ์ล่วงหน้า 5 วัน</a>
-            <a href="/weather-data-entry" id="weather-data-entry-link">บันทึกข้อมูลอากาศ</a>
-        </div>
+    <div class="container">
+        <h1>บันทึกข้อมูลอากาศ</h1>
+        <input type="text" id="location" placeholder="ค้นหาสถานที่...">
+        <button onclick="fetchWeather()">ค้นหา</button>
+        <button class="btn-clear" onclick="clearHistory()">ล้างประวัติ</button>
+        <button onclick="window.location.href='index.html';">กลับไปหน้าหลัก</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>สถานที่</th>
+                    <th>อุณหภูมิ</th>
+                    <th>สภาพอากาศ</th>
+                    <th>เวลาค้นหา</th>
+                </tr>
+            </thead>
+            <tbody id="weatherLogs">
+            </tbody>
+        </table>
     </div>
 
- 
-  <div class="container">
-    <h1>บันทึกข้อมูลสภาพอากาศ</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>ชื่อสถานที่</th>
-          <th>อุณหภูมิ (°C)</th>
-          <th>ความชื้น (%)</th>
-          <th>ความเร็วลม (km/h)</th>
-          <th>วันที่ค้นหา</th>
-          <th>หน้าเว็บที่ค้นหา</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- ข้อมูลตัวอย่าง -->
-        <tr>
-          <td>กรุงเทพฯ</td>
-          <td>32</td>
-          <td>70</td>
-          <td>15</td>
-          <td>2025-03-02 10:30</td>
-          <td>พยากรณ์อากาศ</td>
-        </tr>
-        <tr>
-          <td>เชียงใหม่</td>
-          <td>28</td>
-          <td>60</td>
-          <td>12</td>
-          <td>2025-03-02 11:00</td>
-          <td>การพยากรณ์อากาศล่วงหน้า 5 วัน</td>
-        </tr>
-        <!-- ข้อมูลอื่น ๆ จะถูกแทรกที่นี่ -->
-      </tbody>
-    </table>
-  </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", loadHistory);
 
+        async function fetchWeather() {
+            const location = document.getElementById('location').value;
+            if (!location) return;
+            
+            const apiKey = 'e04255ffd96d458f342df800f6c8d7ea'; 
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${apiKey}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.cod !== 200) {
+                    alert("ไม่พบข้อมูลสถานที่");
+                    return;
+                }
+                
+                const weatherData = {
+                    location: data.name,
+                    temperature: data.main.temp + "°C",
+                    condition: data.weather[0].description,
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                saveToLocalStorage(weatherData);
+                renderWeatherLog(weatherData);
+                document.getElementById('location').value = "";
+            } catch (error) {
+                alert("เกิดข้อผิดพลาดในการดึงข้อมูลอากาศ");
+            }
+        }
+
+        function renderWeatherLog(data) {
+            const table = document.getElementById('weatherLogs');
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${data.location}</td>
+                             <td>${data.temperature}</td>
+                             <td>${data.condition}</td>
+                             <td>${data.timestamp}</td>`;
+            table.prepend(row);
+        }
+
+        function saveToLocalStorage(data) {
+            let logs = JSON.parse(localStorage.getItem("weatherLogs")) || [];
+            logs.unshift(data);
+            localStorage.setItem("weatherLogs", JSON.stringify(logs));
+        }
+
+        function loadHistory() {
+            let logs = JSON.parse(localStorage.getItem("weatherLogs")) || [];
+            logs.forEach(renderWeatherLog);
+        }
+
+        function clearHistory() {
+            localStorage.removeItem("weatherLogs");
+            document.getElementById("weatherLogs").innerHTML = "";
+        }
+    </script>
 </body>
 </html>

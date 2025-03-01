@@ -7,11 +7,70 @@
     <link rel="stylesheet" href="../css/styles.css">
     <style>
     body {
-    background: linear-gradient(to bottom, #b3b3f1, #d4d4f7, #ffffff,#c3b2dd);
-    background-attachment: fixed;
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('https://files.oaiusercontent.com/file-QU2iDzwb3bmKBSpSc62o1e?se=2025-03-01T20%3A15%3A52Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Ddbb5fc66-22c6-48ac-abfd-7258865d679e.webp&sig=FUhis2xDEUgXZ7N7prM1Xk3ihWoTnAdp9FNM4Bywsbg%3D'); 
+  background-size: cover; 
+  background-position: center center;
+  background-attachment: fixed; 
+  color: #000000; 
+  min-height: 100vh; 
+  
 }
+
+
+#temperature,
+#humidity,
+#wind-speed,
+#description,
+#rain-status {
+    border: 2px solid #eceef1; 
+    padding: 5px 10px; 
+    border-radius: 5px; 
+    display: inline-block; 
+    margin-top: 10px; 
+}
+.navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgb(48, 48, 49);
+            padding: 10px 20px;
+        }
+
+        .menu-icon img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        .menu-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .menu-links a:hover {
+            color: #ffcc00;
+        }
+
+        .weather-card {
+            border: 2px solid #99c6f5;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .forecast-container {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px;
+            border-radius: 8px;
+        }
 
     </style>
 </head>
