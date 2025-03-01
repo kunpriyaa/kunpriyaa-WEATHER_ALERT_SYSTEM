@@ -1,116 +1,66 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บันทึกข้อมูลอากาศ</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <style>
-        body {
-            background: linear-gradient(to bottom, #b3b3f1, #d4d4f7, #ffffff, #c3b2dd);
-            background-attachment: fixed;
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .navbar {
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .menu-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
-        }
-
-        .menu-links a:hover {
-            text-decoration: underline;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 500px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            font-size: 24px;
-            color: #4b4b4b;
-            margin-bottom: 20px;
-        }
-
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus {
-            border-color: #6c63ff;
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #6c63ff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        button:hover {
-            background-color: #574bdb;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .input-group input:focus {
-            border-color: #6c63ff;
-            outline: none;
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบบันทึกข้อมูลสภาพอากาศ</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+<style>
+    body {
+background: linear-gradient(to bottom, #b3b3f1, #d4d4f7, #ffffff,#c3b2dd);
+background-attachment: fixed;
+margin: 0;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgb(49, 48, 48);
+        padding: 10px 20px;
+    }
+
+    .menu-icon img {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    .menu-links a {
+        color: white;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+
+    .menu-links a:hover {
+        color: #ffcc00;
+    }
+
+    .weather-card {
+        border: 2px solid #99c6f5;
+        border-radius: 10px;
+        padding: 15px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        min-width: 150px;
+    }
+
+    .forecast-container {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 10px;
+        border-radius: 8px;
+    }
+</style>
 <body>
+    
+  
     <div class="navbar">
         <div class="menu-icon" id="menu-icon">
             
@@ -120,84 +70,45 @@
             <a href="/weather-forecast" id="weather-forecast-link">พยากรณ์อากาศ</a>
             <a href="/weather-10days" id="weather-10days-link">การพยากรณ์ล่วงหน้า 5 วัน</a>
             <a href="/weather-data-entry" id="weather-data-entry-link">บันทึกข้อมูลอากาศ</a>
-            <a href="/admin" id="admin-link">Admin</a>
         </div>
     </div>
 
-    <div class="container">
-        <h2>บันทึกข้อมูลสภาพอากาศ</h2>
+ 
+  <div class="container">
+    <h1>บันทึกข้อมูลสภาพอากาศ</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ชื่อสถานที่</th>
+          <th>อุณหภูมิ (°C)</th>
+          <th>ความชื้น (%)</th>
+          <th>ความเร็วลม (km/h)</th>
+          <th>วันที่ค้นหา</th>
+          <th>หน้าเว็บที่ค้นหา</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- ข้อมูลตัวอย่าง -->
+        <tr>
+          <td>กรุงเทพฯ</td>
+          <td>32</td>
+          <td>70</td>
+          <td>15</td>
+          <td>2025-03-02 10:30</td>
+          <td>พยากรณ์อากาศ</td>
+        </tr>
+        <tr>
+          <td>เชียงใหม่</td>
+          <td>28</td>
+          <td>60</td>
+          <td>12</td>
+          <td>2025-03-02 11:00</td>
+          <td>การพยากรณ์อากาศล่วงหน้า 5 วัน</td>
+        </tr>
+        <!-- ข้อมูลอื่น ๆ จะถูกแทรกที่นี่ -->
+      </tbody>
+    </table>
+  </div>
 
-        <div class="input-group">
-            <label for="location">สถานที่:</label>
-            <input type="text" id="location" placeholder="สถานที่">
-        </div>
-
-        <div class="input-group">
-            <label for="temperature">อุณหภูมิ (°C):</label>
-            <input type="number" id="temperature" placeholder="อุณหภูมิ (°C)">
-        </div>
-
-        <div class="input-group">
-            <label for="rainfall">ปริมาณฝน (มม.):</label>
-            <input type="number" id="rainfall" placeholder="ปริมาณฝน (มม.)">
-        </div>
-
-        <button id="save-btn">บันทึก</button>
-    </div>
-
-    <script src="../js/weather-data.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.getElementById("save-btn").addEventListener("click", async () => {
-                const location = document.getElementById("location").value.trim();
-                const temperature = document.getElementById("temperature").value.trim();
-                const rainfall = document.getElementById("rainfall").value.trim();
-                const token = localStorage.getItem("adminToken");
-
-                if (!token) {
-                    alert("กรุณาเข้าสู่ระบบก่อน");
-                    window.location.href = "/admin";  
-                    return;
-                }
-
-                if (!location || temperature === "" || rainfall === "") {
-                    alert("กรุณากรอกข้อมูลให้ครบทุกช่อง");
-                    return;
-                }
-
-                const weatherData = {
-                    location,
-                    temperature: parseFloat(temperature),
-                    rainfall: parseFloat(rainfall),
-                };
-
-                try {
-                    const response = await fetch("http://localhost:5000/api/weather", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${token}`,
-                        },
-                        body: JSON.stringify(weatherData),
-                    });
-
-                    const result = await response.json();
-
-                    if (response.ok) {
-                        alert("บันทึกข้อมูลสำเร็จ!");
-                        document.getElementById("location").value = "";
-                        document.getElementById("temperature").value = "";
-                        document.getElementById("rainfall").value = "";
-                    } else {
-                        alert(`เกิดข้อผิดพลาด: ${result.message || "ไม่สามารถบันทึกข้อมูลได้"}`);
-                    }
-                } catch (error) {
-                    console.error("Error:", error);
-                    alert("เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์");
-                }
-            });
-        });
-    </script>
 </body>
 </html>
