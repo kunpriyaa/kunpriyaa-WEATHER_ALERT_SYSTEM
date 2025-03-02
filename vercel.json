@@ -2,8 +2,8 @@
     "version": 2,
     "builds": [
       {
-        "src": "frontend/js/app.js",
-        "use": "@vercel/node"
+        "src": "backend/app.js",
+        "use": "@now/node"
       },
       {
         "src": "frontend/css/styles.css",
@@ -34,6 +34,10 @@
       {
         "src": "/weather-monthly",
         "dest": "frontend/pages/weather-monthly.html"
+      },
+      {
+        "src": "/weather/:location",
+        "dest": "frontend/pages/weather-location.html"
       }
     ]
   }
