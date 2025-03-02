@@ -1,44 +1,43 @@
 {
     "version": 2,
     "builds": [
-      {
-        "src": "backend/app.js",
-        "use": "@now/node"
-      },
-      {
-        "src": "frontend/css/styles.css",
-        "use": "@vercel/static"
-      },
-      {
-        "src": "frontend/pages/*.html",
-        "use": "@vercel/static"
-      }
+        {
+            "src": "backend/app.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "frontend/**/*",
+            "use": "@vercel/static"
+        }
     ],
     "routes": [
-      {
-        "src": "/",
-        "dest": "frontend/pages/index.html"
-      },
-      {
-        "src": "/weather-forecast",
-        "dest": "frontend/pages/weather-forecast.html"
-      },
-      {
-        "src": "/weather-data-entry",
-        "dest": "frontend/pages/weather-data-entry.html"
-      },
-      {
-        "src": "/weather-10days",
-        "dest": "frontend/pages/weather-10days.html"
-      },
-      {
-        "src": "/weather-monthly",
-        "dest": "frontend/pages/weather-monthly.html"
-      },
-      {
-        "src": "/weather/:location",
-        "dest": "frontend/pages/weather-location.html"
-      }
+        {
+            "src": "/api/(.*)",
+            "dest": "backend/app.js"
+        },
+        {
+            "src": "/",
+            "dest": "frontend/pages/index.html"
+        },
+        {
+            "src": "/weather-forecast",
+            "dest": "frontend/pages/weather-forecast.html"
+        },
+        {
+            "src": "/weather-data-entry",
+            "dest": "frontend/pages/weather-data-entry.html"
+        },
+        {
+            "src": "/weather-10days",
+            "dest": "frontend/pages/weather-10days.html"
+        },
+        {
+            "src": "/weather-monthly",
+            "dest": "frontend/pages/weather-monthly.html"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "frontend/$1"
+        }
     ]
-  }
-  
+}
