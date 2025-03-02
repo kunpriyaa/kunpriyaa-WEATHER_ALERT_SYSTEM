@@ -32,10 +32,6 @@
             "dest": "frontend/pages/weather-10days.html"
         },
         {
-            "src": "/weather-monthly",
-            "dest": "frontend/pages/weather-monthly.html"
-        },
-        {
             "src": "/(.*)",
             "dest": "frontend/$1"
         }
