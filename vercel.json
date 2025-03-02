@@ -16,22 +16,6 @@
             "dest": "backend/app.js"
         },
         {
-            "src": "/",
-            "dest": "frontend/pages/index.html"
-        },
-        {
-            "src": "/weather-forecast",
-            "dest": "frontend/pages/weather-forecast.html"
-        },
-        {
-            "src": "/weather-data-entry",
-            "dest": "frontend/pages/weather-data-entry.html"
-        },
-        {
-            "src": "/weather-10days",
-            "dest": "frontend/pages/weather-10days.html"
-        },
-        {
             "src": "/(.*)",
             "dest": "frontend/$1"
         }
