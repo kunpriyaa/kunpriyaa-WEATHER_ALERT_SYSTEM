@@ -15,9 +15,11 @@ app.get('/', (req, res) => {
 app.get('/weather-forecast', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/weather-forecast.html'));
 });
+
 app.get('/weather-10days', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/weather-10days.html'));
 });
+
 app.get('/weather-data-entry', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/pages/weather-data-entry.html'));
 });
@@ -59,7 +61,7 @@ app.get('/api/weather', async (req, res) => {
   }
 });
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
