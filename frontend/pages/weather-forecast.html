@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     <style>
     body {
-  background-image: url('https://files.oaiusercontent.com/file-QU2iDzwb3bmKBSpSc62o1e?se=2025-03-01T20%3A15%3A52Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Ddbb5fc66-22c6-48ac-abfd-7258865d679e.webp&sig=FUhis2xDEUgXZ7N7prM1Xk3ihWoTnAdp9FNM4Bywsbg%3D'); 
+  background-image: url('https://png.pngtree.com/background/20250103/original/pngtree-rain-clouds-painting-a-textured-sky-picture-image_15271656.jpg'); 
   background-size: cover; 
   background-position: center center;
   background-attachment: fixed; 
@@ -15,6 +15,26 @@
   min-height: 100vh; 
   
 }
+.weather-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+        .weather-card h3 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+        .weather-card p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        .icon {
+            font-size: 24px;
+            margin-right: 8px;
+        }
 
 
 #temperature,
@@ -71,6 +91,21 @@
             padding: 10px;
             border-radius: 8px;
         }
+        .weather-info-container {
+    background-color: white; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    max-width: 300px; 
+    text-align: center; 
+    
+   
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 
     </style>
 </head>
@@ -86,26 +121,36 @@
             <a href="/weather-data-entry" id="weather-data-entry-link">บันทึกข้อมูลอากาศ</a>
         </div>
     </div>
-
     <div class="container">
+        <div class="clock-container" id="clock">--:--:--</div>
+        
         <div class="search-container">
-            <input type="text" id="search-location" placeholder="ค้นหาตำแหน่งที่ตั้ง">
+            <input type="text" id="search-location" placeholder="ค้นหาตำแหน่ง...">
             <button id="search-btn">🔍</button>
         </div>
-        <div id="weather-info" class="weather-info-container">
-            <div id="weather-info" class="w-full max-w-2xl bg-white/10 backdrop-blur-md rounded-xl p-6 shadow-lg text-black mt-8 hidden">
-                <h3 id="location-name" class="text-lg font-light text-gray-900">อากาศวันนี้เป็นอย่างไร? พิมพ์เพื่อค้นหาสถานที่ที่คุณต้องการ</h3>
-                <div class="mt-4 text-xl font-light">🌡️ อุณหภูมิ: <span id="temperature">-</span>°C</div>
-                <div class="mt-2 text-gray-900">💧 ความชื้น: <span id="humidity">-</span>%</div>
-                <div class="mt-2 text-gray-800">🌬️ ความเร็วลม: <span id="wind-speed">-</span> km/h</div>
-                <div class="mt-2 text-gray-800">📌 สภาพอากาศ: <span id="description">-</span></div>
-                <div class="mt-2 text-gray-800">🌧️ สถานะฝน: <span id="rain-status">-</span></div>
-                <img id="weather-icon" src="" alt="Weather Icon" class="mt-4 w-16 h-16 hidden">
-            </div>
+        
+        <div id="weather-info" class="weather-info-container hidden">
+            <h3 id="location-name">อากาศวันนี้เป็นอย่างไร?</h3>
+            <p>🌡️ อุณหภูมิ: <span id="temperature">-</span></p>
+            <p>💧 ความชื้น: <span id="humidity">-</span></p>
+            <p>🌬️ ความเร็วลม: <span id="wind-speed">-</span> km/h</p>
+            <p>📌 สภาพอากาศ: <span id="description">-</span></p>
+            <p>🌧️ สถานะฝน: <span id="rain-status">-</span></p>
+            <img id="weather-icon" src="" alt="Weather Icon" class="hidden">
         </div>
     </div>
-
+    
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
     <script src="../js/weather.js"></script>
 </body>
 </html>
-
