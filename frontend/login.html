@@ -11,7 +11,6 @@
             justify-content: center;
             align-items: center;
             height: 30px;
-            
             border-radius: 20px;
         }
 
@@ -25,13 +24,13 @@
             background-color: #ffffff;
             background-repeat: no-repeat;
             background-size: 100%;
-            
         }
         .login-container {
             background: rgba(255, 255, 255, 0.74);
             padding: 80px;
             border-radius: 50px;
             box-shadow: 0px 0px 20px rgb(250, 1, 1);
+            text-align: center;
         }
         input {
             display: block;
@@ -40,8 +39,6 @@
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 20px;
-            
-            align-items: center;
         }
         button {
             width: 100%;
@@ -51,10 +48,13 @@
             border: none;
             border-radius: 20px;
             cursor: pointer;
-            
         }
         button:hover {
             background: #218838;
+        }
+        .btn-home {
+            background-color: #007bff;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -65,6 +65,7 @@
         <input type="password" id="password" placeholder="Password">
         <button onclick="login()">Login</button>
         <p id="error-message" style="color: red; display: none;">Username หรือ Password ไม่ถูกต้อง</p>
+        <button class="btn-home" onclick="goHome()">กลับไปหน้าหลัก</button>
     </div>
     
     <script>
@@ -76,13 +77,15 @@
             const correctPassword = "1234";
             
             if (username === correctUsername && password === correctPassword) {
-                window.location.href = "./weather-data-entry.html"; // ลิงก์ไปยังหน้าอื่น
+                window.location.href = "./weather-data-entry.html";
             } else {
                 document.getElementById("error-message").style.display = "block";
             }
         }
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
     </script>
 </body>
 </html>
-
-
