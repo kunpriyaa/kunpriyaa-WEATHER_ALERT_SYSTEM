@@ -6,10 +6,18 @@
     <title>บันทึกค่าอุณหภูมิและ PM2.5</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
+        body { font-family: Arial, sans-serif; text-align: center; position: relative; }
         input { margin: 5px; padding: 8px; }
-        button { padding: 10px; background-color: #28a745; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #218838; }
+        button { padding: 10px; color: white; border: none; cursor: pointer; }
+        button:hover { opacity: 0.8; }
+        .btn-save { background-color: #28a745; }
+        .btn-clear { background-color: #dc3545; }
+        .btn-logout {
+            background-color: #ff9900;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
         canvas { max-width: 600px; margin-top: 20px; }
     </style>
 </head>
@@ -21,22 +29,29 @@
     📍 จังหวัด: <input type="text" id="province" placeholder="เช่น กรุงเทพฯ">
     🌡️ อุณหภูมิ (°C): <input type="number" id="temperature" placeholder="เช่น 30">
     🌫️ PM2.5 (µg/m³): <input type="number" id="pm25" placeholder="เช่น 50">
-    <button onclick="addData()">บันทึก</button>
+    
+    <br><br>
+    <button class="btn-save" onclick="addData()">บันทึก</button>
+    <button class="btn-clear" onclick="clearData()">ล้างข้อมูล</button>
+    <button class="btn-logout" onclick="logout()">ออกจากระบบ</button>
 
     <canvas id="myChart"></canvas>
 
     <script>
-        let data = {
+        // โหลดข้อมูลจาก Local Storage ถ้ามี
+        let storedData = localStorage.getItem("weatherData");
+        let data = storedData ? JSON.parse(storedData) : {
             labels: [],
             datasets: [
-                { label: "PM2.5 (µg/m³)", data: [], backgroundColor: "blue" },
-                { label: "อุณหภูมิ (°C)", data: [], backgroundColor: "red" }
-            ]
+    { label: "PM2.5 (µg/m³)", data: [], backgroundColor: "rgba(173, 216, 230, 0.7)" }, // สีฟ้าอ่อน
+    { label: "อุณหภูมิ (°C)", data: [], backgroundColor: "rgba(255, 160, 122, 0.7)" }  // สีส้มพาสเทล
+    ]
+
         };
 
         let ctx = document.getElementById("myChart").getContext("2d");
         let myChart = new Chart(ctx, {
-            type: "bar", // ใช้กราฟแท่ง
+            type: "bar",
             data: data,
             options: { 
                 responsive: true,
@@ -57,10 +72,29 @@
                 data.labels.push(`${date} (${province})`);
                 data.datasets[0].data.push(parseFloat(pm25));
                 data.datasets[1].data.push(parseFloat(temperature));
+
+                // บันทึกลง Local Storage
+                localStorage.setItem("weatherData", JSON.stringify(data));
+
                 myChart.update();
             } else {
                 alert("กรุณากรอกข้อมูลให้ครบ!");
             }
+        }
+
+        function clearData() {
+            localStorage.removeItem("weatherData");
+            data.labels = [];
+            data.datasets[0].data = [];
+            data.datasets[1].data = [];
+            myChart.update();
+            alert("ล้างข้อมูลเรียบร้อย!");
+        }
+
+        function logout() {
+            localStorage.clear(); // ล้างข้อมูลทั้งหมด
+            alert("ออกจากระบบเรียบร้อย!");
+            window.location.href = "login.html"; // เปลี่ยนเส้นทางไปยังหน้าเข้าสู่ระบบ
         }
     </script>
 
