@@ -26,9 +26,9 @@
     <h2>บันทึกค่าอุณหภูมิและ PM2.5</h2>
     
     📅 วันที่: <input type="date" id="date">
-    📍 จังหวัด: <input type="text" id="province" placeholder="เช่น กรุงเทพฯ">
-    🌡️ อุณหภูมิ (°C): <input type="number" id="temperature" placeholder="เช่น 30">
-    🌫️ PM2.5 (µg/m³): <input type="number" id="pm25" placeholder="เช่น 50">
+    📍 จังหวัด: <input type="text" id="province" placeholder=>
+    🌡️ อุณหภูมิ (°C): <input type="number" id="temperature" placeholder=>
+    🌫️ PM2.5 (µg/m³): <input type="number" id="pm25" placeholder=>
     
     <br><br>
     <button class="btn-save" onclick="addData()">บันทึก</button>
@@ -38,13 +38,13 @@
     <canvas id="myChart"></canvas>
 
     <script>
-        // โหลดข้อมูลจาก Local Storage ถ้ามี
+       
         let storedData = localStorage.getItem("weatherData");
         let data = storedData ? JSON.parse(storedData) : {
             labels: [],
             datasets: [
-    { label: "PM2.5 (µg/m³)", data: [], backgroundColor: "rgba(173, 216, 230, 0.7)" }, // สีฟ้าอ่อน
-    { label: "อุณหภูมิ (°C)", data: [], backgroundColor: "rgba(255, 160, 122, 0.7)" }  // สีส้มพาสเทล
+    { label: "PM2.5 (µg/m³)", data: [], backgroundColor: "rgba(173, 216, 230, 0.7)" }, 
+    { label: "อุณหภูมิ (°C)", data: [], backgroundColor: "rgba(255, 160, 122, 0.7)" }  
     ]
 
         };
@@ -73,7 +73,7 @@
                 data.datasets[0].data.push(parseFloat(pm25));
                 data.datasets[1].data.push(parseFloat(temperature));
 
-                // บันทึกลง Local Storage
+                
                 localStorage.setItem("weatherData", JSON.stringify(data));
 
                 myChart.update();
@@ -92,9 +92,9 @@
         }
 
         function logout() {
-            localStorage.clear(); // ล้างข้อมูลทั้งหมด
+            localStorage.clear(); 
             alert("ออกจากระบบเรียบร้อย!");
-            window.location.href = "login.html"; // เปลี่ยนเส้นทางไปยังหน้าเข้าสู่ระบบ
+            window.location.href = "login.html";
         }
     </script>
 
