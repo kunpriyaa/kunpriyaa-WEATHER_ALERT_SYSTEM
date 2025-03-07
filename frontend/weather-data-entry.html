@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บันทึกค่าอุณหภูมิและ PM2.5</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        input { margin: 5px; padding: 8px; }
+        button { padding: 10px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        canvas { max-width: 600px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h2>บันทึกค่าอุณหภูมิและ PM2.5</h2>
+    
+    📅 วันที่: <input type="date" id="date">
+    📍 จังหวัด: <input type="text" id="province" placeholder="เช่น กรุงเทพฯ">
+    🌡️ อุณหภูมิ (°C): <input type="number" id="temperature" placeholder="เช่น 30">
+    🌫️ PM2.5 (µg/m³): <input type="number" id="pm25" placeholder="เช่น 50">
+    <button onclick="addData()">บันทึก</button>
+
+    <canvas id="myChart"></canvas>
+
+    <script>
+        let data = {
+            labels: [],
+            datasets: [
+                { label: "PM2.5 (µg/m³)", data: [], backgroundColor: "blue" },
+                { label: "อุณหภูมิ (°C)", data: [], backgroundColor: "red" }
+            ]
+        };
+
+        let ctx = document.getElementById("myChart").getContext("2d");
+        let myChart = new Chart(ctx, {
+            type: "bar", // ใช้กราฟแท่ง
+            data: data,
+            options: { 
+                responsive: true,
+                scales: { 
+                    x: { title: { display: true, text: "วันที่" } },
+                    y: { title: { display: true, text: "ค่าอุณหภูมิ / PM2.5" } } 
+                }
+            }
+        });
+
+        function addData() {
+            let date = document.getElementById("date").value;
+            let province = document.getElementById("province").value;
+            let temperature = document.getElementById("temperature").value;
+            let pm25 = document.getElementById("pm25").value;
+
+            if (date && province && temperature && pm25) {
+                data.labels.push(`${date} (${province})`);
+                data.datasets[0].data.push(parseFloat(pm25));
+                data.datasets[1].data.push(parseFloat(temperature));
+                myChart.update();
+            } else {
+                alert("กรุณากรอกข้อมูลให้ครบ!");
+            }
+        }
+    </script>
+
+</body>
+</html>
