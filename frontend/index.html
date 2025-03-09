@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/styles.css">
     <style>
     body {
-      background-image: url(https://wallpaperaccess.com/full/398927.jpg);
+        background-image: url(https://wallpaperaccess.com/full/398927.jpg);
         background-size: cover; 
         background-position: center center;
         background-attachment: fixed; 
@@ -23,123 +23,115 @@
     }
 
     body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f9;
-  margin: 0;
-  padding: 0;
-}
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
 
-.navbar {
-  background-color: #146c94;
-  color: #c9eeff;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .navbar {
+        background-color: #146c94;
+        color: #c9eeff;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-.menu-icon span {
-  background-color: rgba(255, 255, 255, 0);
-  display: block;
-  height: 5px;
-  margin: 4px 0;
-  width: 25px;
-}
+    .menu-icon span {
+        background-color: rgba(255, 255, 255, 0);
+        display: block;
+        height: 5px;
+        margin: 4px 0;
+        width: 25px;
+    }
 
-.menu-links a {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-  margin: 0 10px;
-  border-radius: 15px;
-  border: solid 5px #3795bd;
-  background-color: #3795bd;
-  
-}
+    .menu-links a {
+        color: rgb(255, 255, 255);
+        text-decoration: none;
+        margin: 0 10px;
+        border-radius: 15px;
+        border: solid 5px #3795bd;
+        background-color: #3795bd;
+    }
 
-.menu-links a:hover {
-  text-decoration: underline;
-}
+    .menu-links a:hover {
+        text-decoration: underline;
+    }
 
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 20px;
-}
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
 
-.search-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  color: #000;
-}
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        color: #000;
+    }
 
-#search-location {
-  padding: 10px;
-  font-size: 16px;
-  width: 60%;
-  
-  border-radius: 50px;
-}
+    #search-location {
+        padding: 10px;
+        font-size: 16px;
+        width: 60%;
+        border-radius: 50px;
+    }
 
-#search-btn {
-  padding: 20px;
-  font-size: 16px;
-  background-color: #004261;
-  color: #c9eeff;
-  border: none;
-  cursor: pointer;
-  border-radius: 50px;
-}
+    #search-btn {
+        padding: 20px;
+        font-size: 16px;
+        background-color: #004261;
+        color: #c9eeff;
+        border: none;
+        cursor: pointer;
+        border-radius: 50px;
+    }
 
-#search-btn:hover {
-  background-color: #555;
-  
-}
+    #search-btn:hover {
+        background-color: #0a0101;
+    }
 
-.weather-info-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  top: 0;
-  margin-top: 20px;
-  width: 100%;
-}
+    .weather-info-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        top: 0;
+        margin-top: 20px;
+        width: 100%;
+    }
 
-.weather-card {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  margin-bottom: 20px;
-  width: 300px;
-}
+    .weather-card {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin-bottom: 20px;
+        width: 300px;
+    }
 
-.weather-card h3 {
-  font-size: 24px;
-  margin-top: 10px;
-  color: #333;
-}
+    .weather-card h3 {
+        font-size: 24px;
+        margin-top: 10px;
+        color: #0a0101;
+    }
 
-.weather-card p {
-  font-size: 18px;
-  color: #555;
-}
-
-
-
+    .weather-card p {
+        font-size: 18px;
+        color: #0a0101;
+    }
 
     </style>
 </head>
 <body>
     <div class="navbar">
-        <div class="menu-icon" id="menu-icon">
-        </div>
+        <div class="menu-icon" id="menu-icon"></div>
         <div class="menu-links">
             <a href="./weather-forecast.html" id="weather-forecast-link">พยากรณ์อากาศ</a>
             <a href="./weather-5days.html" id="weather-5days-link">พยากรณ์อากาศ 5 - 10 วัน</a>
-            
             <a href="./login.html" id="login">เข้าสู่ระบบผู้ดูแล</a>
         </div>
     </div>
@@ -164,6 +156,11 @@
             <h3>กราฟแนวโน้มอากาศ</h3>
             <canvas id="weather-trend-chart" width="400" height="200"></canvas>
         </div>
+
+        <div id="admin-data-container" style="margin-top: 40px;">
+            <h3>กราฟข้อมูลที่บันทึกโดยแอดมิน</h3>
+            <canvas id="admin-weather-trend-chart" width="400" height="200"></canvas>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -186,7 +183,6 @@
                     return;
                 }
 
-              
                 const weatherData = {
                     location: data.name,
                     temperature: data.main.temp + "°C",
@@ -194,20 +190,59 @@
                     timestamp: new Date().toLocaleString()
                 };
 
-              
                 let weatherLogs = JSON.parse(localStorage.getItem("weatherLogs")) || [];
                 weatherLogs.push(weatherData);
                 localStorage.setItem("weatherLogs", JSON.stringify(weatherLogs));
 
-              
                 document.getElementById('location-name').textContent = data.name;
                 document.getElementById('temperature').textContent = data.main.temp + "°C";
                 document.getElementById('current-time').textContent = new Date().toLocaleString();
 
-             
                 document.getElementById('search-location').value = "";
             } catch (error) {
                 alert("เกิดข้อผิดพลาดในการดึงข้อมูลอากาศ");
+            }
+        });
+
+        let storedData = localStorage.getItem("weatherData");
+        let adminData = storedData ? JSON.parse(storedData) : {
+            labels: ["จังหวัด A", "จังหวัด B", "จังหวัด C"], // ตัวอย่างจังหวัด
+            datasets: [
+                { label: "PM2.5 (µg/m³)", data: [15, 25, 10], backgroundColor: "rgba(173, 216, 230, 0.7)" },
+                { label: "อุณหภูมิ (°C)", data: [30, 28, 33], backgroundColor: "rgba(255, 160, 122, 0.7)" }
+            ]
+        };
+
+        let ctx = document.getElementById("admin-weather-trend-chart").getContext("2d");
+        let adminWeatherTrendChart = new Chart(ctx, {
+            type: "bar",
+            data: adminData,
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                let label = tooltipItem.dataset.label || '';
+                                let value = tooltipItem.raw || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                return label + value + (label.includes("PM2.5") ? ' µg/m³' : ' °C');
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: "จังหวัด" }, 
+                        ticks: { font: { weight: 'bold', size: 14 } }
+                    },
+                    y: { 
+                        title: { display: true, text: "ค่าอุณหภูมิ / PM2.5" },
+                        ticks: { font: { weight: 'bold', size: 14 } }
+                    }
+                }
             }
         });
     </script>
