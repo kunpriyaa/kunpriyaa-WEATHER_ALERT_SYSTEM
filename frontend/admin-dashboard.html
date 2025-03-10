@@ -16,13 +16,12 @@
     </style>
 </head>
 <body>
-
     <h2>บันทึกค่าอุณหภูมิและ PM2.5</h2>
     
     📅 วันที่: <input type="date" id="date">
-    📍 จังหวัด: <input type="text" id="province" placeholder=>
-    🌡️ อุณหภูมิ (°C): <input type="number" id="temperature" placeholder=>
-    🌫️ PM2.5 (µg/m³): <input type="number" id="pm25" placeholder=>
+    📍 จังหวัด: <input type="text" id="province" placeholder="กรอกจังหวัด">
+    🌡️ อุณหภูมิ (°C): <input type="number" id="temperature" placeholder="กรอกอุณหภูมิ">
+    🌫️ PM2.5 (µg/m³): <input type="number" id="pm25" placeholder="กรอกค่า PM2.5">
     <button onclick="addData()">บันทึก</button>
     <button onclick="clearData()" style="background-color: #dc3545;">ล้างข้อมูล</button>
 
@@ -50,42 +49,41 @@
                     { label: "PM2.5 (µg/m³)", data: [], backgroundColor: "blue" },
                     { label: "อุณหภูมิ (°C)", data: [], backgroundColor: "red" }
                 ] };
-                createChart(province);
             }
             
             provinceData[province].labels.push(date);
             provinceData[province].datasets[0].data.push(parseFloat(pm25));
             provinceData[province].datasets[1].data.push(parseFloat(temperature));
-            updateChart(province);
             localStorage.setItem("provinceData", JSON.stringify(provinceData));
+            renderCharts();
         } else {
             alert("กรุณากรอกข้อมูลให้ครบ!");
         }
     }
 
-    function createChart(province) {
+    function renderCharts() {
         let chartContainer = document.getElementById("charts");
-        let chartBox = document.createElement("div");
-        chartBox.classList.add("chart-box");
-        chartBox.innerHTML = `<h3>${province}</h3><canvas id="chart-${province}"></canvas>`;
-        chartContainer.appendChild(chartBox);
+        chartContainer.innerHTML = "";
 
-        let ctx = document.getElementById(`chart-${province}`).getContext("2d");
-        provinceData[province].chart = new Chart(ctx, {
-            type: "bar",
-            data: provinceData[province],
-            options: { 
-                responsive: true,
-                scales: { 
-                    x: { title: { display: true, text: "วันที่" } },
-                    y: { title: { display: true, text: "ค่าอุณหภูมิ / PM2.5" } } 
+        Object.keys(provinceData).forEach(province => {
+            let chartBox = document.createElement("div");
+            chartBox.classList.add("chart-box");
+            chartBox.innerHTML = `<h3>${province}</h3><canvas id="chart-${province}"></canvas>`;
+            chartContainer.appendChild(chartBox);
+
+            let ctx = document.getElementById(`chart-${province}`).getContext("2d");
+            new Chart(ctx, {
+                type: "bar",
+                data: provinceData[province],
+                options: { 
+                    responsive: true,
+                    scales: { 
+                        x: { title: { display: true, text: "วันที่" } },
+                        y: { title: { display: true, text: "ค่าอุณหภูมิ / PM2.5" } } 
+                    }
                 }
-            }
+            });
         });
-    }
-
-    function updateChart(province) {
-        provinceData[province].chart.update();
     }
 
     function clearData() {
@@ -99,8 +97,7 @@
             alert("กรุณาเข้าสู่ระบบก่อนเข้าหน้านี้");
             window.location.href = "admin-login.html";
         }
-
-        Object.keys(provinceData).forEach(province => createChart(province));
+        renderCharts();
     });
 </script>
 </body>
