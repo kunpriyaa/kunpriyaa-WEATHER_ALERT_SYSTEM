@@ -20,10 +20,11 @@
     <h2>บันทึกค่าอุณหภูมิและ PM2.5</h2>
     
     📅 วันที่: <input type="date" id="date">
-    📍 จังหวัด: <input type="text" id="province" placeholder="เช่น กรุงเทพฯ">
-    🌡️ อุณหภูมิ (°C): <input type="number" id="temperature" placeholder="เช่น 30">
-    🌫️ PM2.5 (µg/m³): <input type="number" id="pm25" placeholder="เช่น 50">
+    📍 จังหวัด: <input type="text" id="province" placeholder=>
+    🌡️ อุณหภูมิ (°C): <input type="number" id="temperature" placeholder=>
+    🌫️ PM2.5 (µg/m³): <input type="number" id="pm25" placeholder=>
     <button onclick="addData()">บันทึก</button>
+    <button onclick="clearData()" style="background-color: #dc3545;">ล้างข้อมูล</button>
 
     <div class="chart-container" id="charts"></div>
     <button id="logoutButton">ออกจากระบบ</button>
@@ -31,10 +32,11 @@
 <script>
     document.getElementById("logoutButton").addEventListener("click", function () {
         sessionStorage.removeItem("isAdminLoggedIn");
+        localStorage.removeItem("provinceData");
         window.location.href = "login.html";
     });
 
-    let provinceData = {};
+    let provinceData = JSON.parse(localStorage.getItem("provinceData")) || {};
 
     function addData() {
         let date = document.getElementById("date").value;
@@ -55,6 +57,7 @@
             provinceData[province].datasets[0].data.push(parseFloat(pm25));
             provinceData[province].datasets[1].data.push(parseFloat(temperature));
             updateChart(province);
+            localStorage.setItem("provinceData", JSON.stringify(provinceData));
         } else {
             alert("กรุณากรอกข้อมูลให้ครบ!");
         }
@@ -85,12 +88,19 @@
         provinceData[province].chart.update();
     }
 
+    function clearData() {
+        localStorage.removeItem("provinceData");
+        location.reload();
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
         const isAdminLoggedIn = sessionStorage.getItem("isAdminLoggedIn");
         if (!isAdminLoggedIn || isAdminLoggedIn !== "true") {
             alert("กรุณาเข้าสู่ระบบก่อนเข้าหน้านี้");
             window.location.href = "admin-login.html";
         }
+
+        Object.keys(provinceData).forEach(province => createChart(province));
     });
 </script>
 </body>
