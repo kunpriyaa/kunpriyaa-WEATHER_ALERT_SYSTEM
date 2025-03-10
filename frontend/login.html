@@ -6,7 +6,7 @@
     <title>Admin Login</title>
     <style>
         h2 {
-          font-family: Arial, sans-serif;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,6 +31,8 @@
             padding: 80px;
             border-radius: 50px;
             box-shadow: 0px 0px 20px rgb(250, 1, 1);
+            border: 3px solid #ff0000;
+            text-align: center;
         }
         input {
             display: block;
@@ -63,11 +65,13 @@
     </style>
 </head>
 <body>
-    <h2>เข้าสู่ระบบ</h2>
-    <input type="text" id="username" placeholder="ชื่อผู้ใช้"><br>
-    <input type="password" id="password" placeholder="รหัสผ่าน"><br>
-    <button id="loginButton">เข้าสู่ระบบ</button>
-    <button class="back-button" onclick="goHome()">กลับไปหน้าหลัก</button>
+    <div class="login-container">
+        <h2>เข้าสู่ระบบ</h2>
+        <input type="text" id="username" placeholder="ชื่อผู้ใช้"><br>
+        <input type="password" id="password" placeholder="รหัสผ่าน"><br>
+        <button id="loginButton">เข้าสู่ระบบ</button>
+        <button class="back-button" onclick="goHome()">กลับไปหน้าหลัก</button>
+    </div>
 
     <script>
         document.getElementById("loginButton").addEventListener("click", function () {
