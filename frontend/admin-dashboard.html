@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บันทึกค่าอุณหภูมิและ PM2.5</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        input { margin: 5px; padding: 8px; }
+        button { padding: 10px; background-color: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        canvas { max-width: 600px; margin-top: 20px; }
+        .chart-container { display: flex; flex-wrap: wrap; justify-content: center; }
+        .chart-box { margin: 20px; }
+    </style>
+</head>
+<body>
+
+    <h2>บันทึกค่าอุณหภูมิและ PM2.5</h2>
+    
+    📅 วันที่: <input type="date" id="date">
+    📍 จังหวัด: <input type="text" id="province" placeholder="เช่น กรุงเทพฯ">
+    🌡️ อุณหภูมิ (°C): <input type="number" id="temperature" placeholder="เช่น 30">
+    🌫️ PM2.5 (µg/m³): <input type="number" id="pm25" placeholder="เช่น 50">
+    <button onclick="addData()">บันทึก</button>
+
+    <div class="chart-container" id="charts"></div>
+    <button id="logoutButton">ออกจากระบบ</button>
+
+<script>
+    document.getElementById("logoutButton").addEventListener("click", function () {
+        sessionStorage.removeItem("isAdminLoggedIn");
+        window.location.href = "login.html";
+    });
+
+    let provinceData = {};
+
+    function addData() {
+        let date = document.getElementById("date").value;
+        let province = document.getElementById("province").value;
+        let temperature = document.getElementById("temperature").value;
+        let pm25 = document.getElementById("pm25").value;
+
+        if (date && province && temperature && pm25) {
+            if (!provinceData[province]) {
+                provinceData[province] = { labels: [], datasets: [
+                    { label: "PM2.5 (µg/m³)", data: [], backgroundColor: "blue" },
+                    { label: "อุณหภูมิ (°C)", data: [], backgroundColor: "red" }
+                ] };
+                createChart(province);
+            }
+            
+            provinceData[province].labels.push(date);
+            provinceData[province].datasets[0].data.push(parseFloat(pm25));
+            provinceData[province].datasets[1].data.push(parseFloat(temperature));
+            updateChart(province);
+        } else {
+            alert("กรุณากรอกข้อมูลให้ครบ!");
+        }
+    }
+
+    function createChart(province) {
+        let chartContainer = document.getElementById("charts");
+        let chartBox = document.createElement("div");
+        chartBox.classList.add("chart-box");
+        chartBox.innerHTML = `<h3>${province}</h3><canvas id="chart-${province}"></canvas>`;
+        chartContainer.appendChild(chartBox);
+
+        let ctx = document.getElementById(`chart-${province}`).getContext("2d");
+        provinceData[province].chart = new Chart(ctx, {
+            type: "bar",
+            data: provinceData[province],
+            options: { 
+                responsive: true,
+                scales: { 
+                    x: { title: { display: true, text: "วันที่" } },
+                    y: { title: { display: true, text: "ค่าอุณหภูมิ / PM2.5" } } 
+                }
+            }
+        });
+    }
+
+    function updateChart(province) {
+        provinceData[province].chart.update();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const isAdminLoggedIn = sessionStorage.getItem("isAdminLoggedIn");
+        if (!isAdminLoggedIn || isAdminLoggedIn !== "true") {
+            alert("กรุณาเข้าสู่ระบบก่อนเข้าหน้านี้");
+            window.location.href = "admin-login.html";
+        }
+    });
+</script>
+</body>
+</html>
