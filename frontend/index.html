@@ -126,10 +126,6 @@
   font-size: 18px;
   color: #555;
 }
-
-
-
-
     </style>
 </head>
 <body>
@@ -168,6 +164,63 @@
               <canvas id="admin-weather-trend-chart" width="400" height="200"></canvas>
           </div>
       </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let storedData = localStorage.getItem("provinceData");
+            console.log("✅ ข้อมูลจาก localStorage:", storedData);
+
+            if (storedData) {
+                let adminData = JSON.parse(storedData);
+                let labels = []; 
+                let pm25Data = [];
+                let tempData = [];
+
+              
+                Object.keys(adminData).forEach(province => {
+                    let data = adminData[province];
+                    labels.push(province);
+                    pm25Data.push(data.datasets[0].data.slice(-1)[0] || 0);
+                    tempData.push(data.datasets[1].data.slice(-1)[0] || 0); 
+                });
+
+                let canvas = document.getElementById("admin-weather-trend-chart");
+                console.log("✅ Canvas:", canvas);
+
+                if (canvas) {
+                    let ctx = canvas.getContext("2d");
+                    new Chart(ctx, {
+                        type: "bar", 
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: "PM2.5 (µg/m³)",
+                                    data: pm25Data,
+                                    backgroundColor: "rgba(173, 216, 230, 0.7)"
+                                },
+                                {
+                                    label: "อุณหภูมิ (°C)",
+                                    data: tempData,
+                                    backgroundColor: "rgba(255, 160, 122, 0.7)"
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: { title: { display: true, text: "จังหวัด" } },
+                                y: { title: { display: true, text: "ค่าอุณหภูมิ / PM2.5" } }
+                            }
+                        }
+                    });
+                } else {
+                    console.error("❌ ไม่พบ Canvas id='admin-weather-trend-chart'");
+                }
+            } else {
+                console.error("❌ ไม่มีข้อมูลใน localStorage");
+            }
+        });
+    </script>
   
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script src="../js/weather.js"></script>
@@ -210,14 +263,6 @@
             }
         });
 
-        let storedData = localStorage.getItem("weatherData");
-        let adminData = storedData ? JSON.parse(storedData) : {
-            labels: ["จังหวัด A", "จังหวัด B", "จังหวัด C"], 
-            datasets: [
-                { label: "PM2.5 (µg/m³)", data: [15, 25, 10], backgroundColor: "rgba(173, 216, 230, 0.7)" },
-                { label: "อุณหภูมิ (°C)", data: [30, 28, 33], backgroundColor: "rgba(255, 160, 122, 0.7)" }
-            ]
-        };
 
         let ctx = document.getElementById("admin-weather-trend-chart").getContext("2d");
         let adminWeatherTrendChart = new Chart(ctx, {
